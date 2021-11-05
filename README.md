@@ -51,6 +51,7 @@ console.log(data);
 
 Symbolic Legend
 ===============
+
 1. /          = root of Object
 2. ~          = first object below root relative to the current position
 3. EMPTY      = binded to whatever needed in stringify and parse (root is DEFAULT)
@@ -58,8 +59,9 @@ Symbolic Legend
 5. ..         = parent object // beta
 6. SYMBOL*    = key of SYMBOL // comming soon in v2.0 
 
-###Path examples
-  Following are a few path examples
+### Path examples
+
+Following are a few path examples
 ```
 /person/name
 ~/name
@@ -71,11 +73,11 @@ Symbolic Legend
 2. *nakiri.stringify()* is used to stringify a circular object. (comming soon)
 3. *nakiri.map(_DEPTH, _OBJ, _keyModFunction, _valueModFunction, _metaData)* is used to recurcively map an object.
 
-> If not sure use ```0``` as **_DEPTH**.
-> **_OBJ** is the object you want to map.
-> If not sure use ```_key => _key``` as **_keyModFunction**.
-> If not sure use ```(_val, _metadata) => _val``` as **_valueModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself.
-> If not sure use ```{}``` as **_metadata**. Use this argument to provide extra data to a pirticular node. (Comming soon).
+> If not sure use ```0``` as **_DEPTH**.  
+> **_OBJ** is the object you want to map.  
+> If not sure use ```_key => _key``` as **_keyModFunction**.  
+> If not sure use ```(_val, _metadata) => _val``` as **_valueModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself.  
+> If not sure use ```{}``` as **_metadata**. Use this argument to provide extra data to a pirticular node. (Comming soon).  
 
 
 More documentation comming soon, if you have questions shoot them at *rayvanet@gmail.com* and I will get to it ASAP.

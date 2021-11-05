@@ -1,0 +1,27 @@
+{
+  "name": "nakiri",
+  "version": "1.0.0",
+  "description": "Create circular JSON objects from .json files using a built-in unix style referencing scheme.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ray6464/Nakiri.git"
+  },
+  "keywords": [
+    "circular",
+    "json",
+    "parse",
+    "stringify",
+    "deep"
+  ],
+  "author": "Ray Voice",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ray6464/Nakiri/issues"
+  },
+  "homepage": "https://github.com/Ray6464/Nakiri#readme",
+  "devDependencies": {}
+}
