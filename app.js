@@ -1,11 +1,13 @@
-// imported modules
-const { readFileSync, writeFileSync, existsSync, lstatSync } = require('fs');
-const { resolve, basename } = require('path'); 
-const flags = require('ray-flags');
-const { sucide } = require('sucide');
 // needs escape sequences for {, }, /, ., ~
+
+function parseCircularObject(_OBJ, _SYMLESS, _SEPRATOR) {
+  if (typeof(_OBJ) !== 'object') return 'ERR: 1st Argument not an object';
+  if (typeof(_SYMLESS) === 'undefined') _SYMLESS = '__ROOT__/';
+  if (typeof(_SEPRATOR) === 'undefined') _SEPRATOR = '/';
+
 function getNode(_value, _data) {
-  if (_value === '/')   return _data.ROOT;
+  if (_value === '/')   return _data.ROOT; // dosen't work yet, the code removes the first '/' somewhere
+  if (_value === '__ROOT__')   return _data.ROOT; 
   if (_value === '~')   return _data.HOME;
   if (_value === '..')  return _data.PARENT;
   if (_value === '.')   return _data.CURRENT;
@@ -17,17 +19,23 @@ function getValue(_path, _data) {
   const isAbsolute = (_path[0] === '/'); 
   const isSYMLESS = (_path[0] !== '/' && _path[0] !== '~' && _path[0] !== '..' && _path[0] !== '.');
 
-  if (isSYMLESS === true) _path = SYMLESS_NODE + '/' + _path;
-  const nodes = _path.split(SEPRATOR).map(_node => getNode(_node, _data));
+  //if (isSYMLESS === true) _path = SYMLESS_NODE + '/' + _path;
+  if (isSYMLESS === true) _path = SYMLESS_NODE + _path;
+  if (isAbsolute === true) _path = '__ROOT__/' + _path;
+  const nodes = _path.split(SEPRATOR).filter(x => (x === ''? false: true)).map(_node => getNode(_node, _data));
 
-  if (isAbsolute === true) nodes.unshift('/');
-  const value = nodes.reduce((_prev_node_name, _node_name) => _prev_node_name[_node_name]);
+//  if (isAbsolute === true) nodes.unshift('/'); // remove: original line
+  const value = nodes.reduce((_prev_node_name, _node_name) => {
+    if (typeof(_prev_node_name) === 'undefined') return '';
+    return _prev_node_name[_node_name]
+  });
   return value;
 }
 
-const SEPRATOR = '/'; // get form flags or args in v2.0
-const SYMLESS_NODE = "~/info"; // get from flags or args nowi, add a machanism to remove '/' from the end of the string if there is one or more of them there
-const sampleObject = {
+const SEPRATOR = _SEPRATOR;//'/'; // get form flags or args in v2.0
+const SYMLESS_NODE = _SYMLESS;//"~/info"; // get from flags or args nowi, add a machanism to remove '/' from the end of the string if there is one or more of them there
+const sampleObject = _OBJ;
+/* const sampleObject = {
   david: {
     info: {
       name: "David",
@@ -45,7 +53,7 @@ const sampleObject = {
       }
     }
   }
-}
+}*/
 
 const ELEMENTS_JSON = sampleObject; // get from flags or args now
 const JSON_DATA_STRING = JSON.stringify(ELEMENTS_JSON);
@@ -88,8 +96,10 @@ const REFERENCES = mapObjectRecursively(0, ELEMENTS_JSON, _key => _key, (_value,
 });
 
 //console.log( JSON.stringify(sampleObject, null, 2) );
-console.log( JSON.stringify(REFERENCES, null, 2) );
+//console.log( JSON.stringify(REFERENCES, null, 2) );
+return REFERENCES;
 //console.log( REFERENCES[1].SUB_REFERENCES );
+}
 
 function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunction, _meta_data) { // _meta_hive is data required at all levels of a recursive iteration
   if (Array.isArray(_obj)) return _obj.map(_i => mapObjectRecursively(_depth_count+1, _i, _keyModFunction, _valueModFunction, {
@@ -112,13 +122,15 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
   return _valueModFunction(_obj, _meta_data); // when object is STRING, NUMBER, BOOLEAN, etc.
 };
 
-module.export = {
+
+module.exports = {
   stringify: function(_JSON, SYMLESS, BREAK_POINT_DEPTH) {
     const output = {};
     return output;
   },
-  parse: function(_STRING, SYMLESS) {
-    return "method under construction";
+  parse: function(_OBJ, _SYMLESS, _SEPRATOR) {
+    return parseCircularObject(_OBJ, _SYMLESS, _SEPRATOR);
   },
+  mapObjectRecursively: mapObjectRecursively
 }
 
