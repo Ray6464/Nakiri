@@ -119,11 +119,12 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
             HOME: (_depth_count === 1 ? _obj : _meta_data.HOME),
             PARENT: _obj,
             CURRENT: _entry[1],
+	    KEY: _entry[0],
             SYMLESS: _meta_data.SYMLESS 
 	  })]);
 	  return Object.fromEntries(ENTRIES);
   }
-  return _valueModFunction(_obj, _meta_data); // when object is STRING, NUMBER, BOOLEAN, etc.
+  return _valueModFunction(_obj, _meta_data, ); // when object is STRING, NUMBER, BOOLEAN, etc.
 };
 
 
