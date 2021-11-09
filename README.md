@@ -71,7 +71,7 @@ Following are a few path examples
 
 1. *nakiri.parse(_OBJ, _SYMLESS, _SEPRATOR)* is used to parse a circular object.
 2. *nakiri.stringify()* is used to stringify a circular object. (comming soon)
-3. *nakiri.map(_DEPTH, _OBJ, _keyModFunction, _valueModFunction, _metaData)* is used to recurcively map an object.
+3. *nakiri.mapObjectRecursively(_DEPTH, _OBJ, _keyModFunction, _valueModFunction, _metaData)* is used to recurcively map an object.
 
 > If not sure use ```0``` as **_DEPTH**.  
 > **_OBJ** is the object you want to map.  
