@@ -76,9 +76,8 @@ Following are a few path examples
 > If not sure use ```0``` as **_DEPTH**.  
 > **_OBJ** is the object you want to map.  
 > If not sure use ```(_key, _metadata) => _key``` as **_keyModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself. E.g. ```_metadata.PARENT``` will return the object presently iterating.  
-> If not sure use ```(_val, _metadata) => _val``` as **_valueModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself. E.g. ```_metadata.KEY``` the key of the value.  
-> If not sure use ```{}``` as **_metadata**. Use this argument to provide extra data to a pirticular node. (Comming soon).  
-
+> If not sure use ```(_val, _metadata) => _val``` as **_valueModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself. E.g. ```_metadata.KEY``` the key of the value. ```_metadata.PIGGYBACK``` can access properties of the *_metaData* argument if the argument goes like ```{ PIGGYBACK: { /* stuff here */ } }```.  
+> If not sure use ```{}``` as **_metadata**. Use this argument to provide extra data to a pirticular node.  
 
 More documentation comming soon, if you have questions shoot them at *rayvanet@gmail.com* and I will get to it ASAP.
 

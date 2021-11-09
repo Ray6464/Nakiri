@@ -107,7 +107,8 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
     HOME: (_depth_count === 1 ? _obj : _meta_data.HOME),
     PARENT: _obj,
     CURRENT: _i,
-    SYMLESS: _meta_data.SYMLESS 
+    SYMLESS: _meta_data.SYMLESS,
+    PIGGYBACK: _meta_data.PIGGYBACK
   }));
   if (typeof(_obj) === 'object' && _obj !== null) {
 	  const key_meta = {
@@ -120,11 +121,12 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
             PARENT: _obj,
             CURRENT: _entry[1],
 	    KEY: _entry[0],
-            SYMLESS: _meta_data.SYMLESS 
+            SYMLESS: _meta_data.SYMLESS, 
+            PIGGYBACK: _meta_data.PIGGYBACK
 	  })]);
 	  return Object.fromEntries(ENTRIES);
   }
-  return _valueModFunction(_obj, _meta_data, ); // when object is STRING, NUMBER, BOOLEAN, etc.
+  return _valueModFunction(_obj, _meta_data); // when object is STRING, NUMBER, BOOLEAN, etc.
 };
 
 
