@@ -75,7 +75,7 @@ Following are a few path examples
 
 > If not sure use ```0``` as **_DEPTH**.  
 > **_OBJ** is the object you want to map.  
-> If not sure use ```_key => _key``` as **_keyModFunction**.  
+> If not sure use ```(_key, _metadata) => _key``` as **_keyModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself. E.g. ```_metadata.PARENT[_key]``` will return the value of the key.
 > If not sure use ```(_val, _metadata) => _val``` as **_valueModFunction**. The **_metadata** argument is an object with information about the object passed, including the passed object itself.  
 > If not sure use ```{}``` as **_metadata**. Use this argument to provide extra data to a pirticular node. (Comming soon).  
 

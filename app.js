@@ -112,9 +112,9 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
   if (typeof(_obj) === 'object' && _obj !== null) {
 	  const key_meta = {
 		  ..._meta_data,
-		  ..._obj,
+		  PARENT:_obj,
 	  };
-	  const ENTRIES = Object.entries(_obj).map(_entry => [_keyModFunction(_entry[0], key_meta), mapObjectRecursively(_depth_count+1, _entry[1], _keyModFunction, _valueModFunction, {
+	  const ENTRIES = Object.entries(_obj).map(_entry => [_keyModFunction(_entry[0], {...key_meta, VALUE: _obj[_entry[0]]}), mapObjectRecursively(_depth_count+1, _entry[1], _keyModFunction, _valueModFunction, {
             ROOT: _meta_data.ROOT,
             HOME: (_depth_count === 1 ? _obj : _meta_data.HOME),
             PARENT: _obj,
