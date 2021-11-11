@@ -130,6 +130,10 @@ function mapObjectRecursively(_depth_count, _obj, _keyModFunction, _valueModFunc
 };
 
 
+function mapEntries(_obj, _map) {
+  return Object.fromEntries(Object.entries(_obj).map(_map));
+}
+
 module.exports = {
   stringify: function(_JSON, SYMLESS, BREAK_POINT_DEPTH) {
     const output = {};
@@ -138,6 +142,7 @@ module.exports = {
   parse: function(_OBJ, _SYMLESS, _SEPRATOR) {
     return parseCircularObject(_OBJ, _SYMLESS, _SEPRATOR);
   },
-  mapObjectRecursively: mapObjectRecursively
+  mapObjectRecursively: mapObjectRecursively,
+  mapEntries,
 }
 
