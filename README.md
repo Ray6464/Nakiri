@@ -102,6 +102,8 @@ Following are a few path examples
 
 4. *nakiri.mapEntries(_obj, _mapFunction)* is used to map entries of an object. The *_mapFunction* argument must be a valid javascript function that returns a 2-D array, in which each member is a valid entry, e.g. ```entry => ['key', 'value']```.  
 
+5. *nakiri.mapKeys(_obj, _mapFunction)* is used to map keys of an object. The *_mapFunction* argument must be a valid javascript function that takes in a valid *JSON key* and return a valid *JSON key*. e.g. ```key => key+5``` will append the character '5' to all key names.  
+
 More documentation comming soon, if you have questions shoot them at *rayvanet@gmail.com* and I will get to it ASAP.
 
 # LICENSE

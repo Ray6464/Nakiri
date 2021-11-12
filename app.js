@@ -134,6 +134,10 @@ function mapEntries(_obj, _map) {
   return Object.fromEntries(Object.entries(_obj).map(_map));
 }
 
+function mapKeys(_obj, _map) {
+  return mapEntries(_obj, _e => [_map(_e[0]), _e[1]]);
+}
+
 module.exports = {
   stringify: function(_JSON, SYMLESS, BREAK_POINT_DEPTH) {
     const output = {};
@@ -144,5 +148,6 @@ module.exports = {
   },
   mapObjectRecursively: mapObjectRecursively,
   mapEntries,
+  mapKeys,
 }
 
