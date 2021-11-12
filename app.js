@@ -138,6 +138,25 @@ function mapKeys(_obj, _map) {
   return mapEntries(_obj, _e => [_map(_e[0]), _e[1]]);
 }
 
+function mapObjectRecursivelyV2 (_obj, _map, _d) {
+  // beta
+  // _d is for object depth, not array depth
+  return mapEntries(_obj, _e => {
+    if (_d <= 0 || _e[1] === null) return [_e[0], _e[1]];
+    if (isObject(_e[1])) return [_e[0], mapObjectRecursivelyV2(_e[1], _map, _d-1)];
+    if (Array.isArray(_e[1])) return [_e[0], _e[1].map(_m => {
+      if (isObject(_m)) return mapObjectRecursivelyV2(_m, _map, _d-1); 
+      return _map(['key'+_m, _m])[1];
+    })];
+    return _map([..._e]);
+  });
+}
+
+function isObject(a) {
+  if (typeof(a) === 'object' && !Array.isArray(a) && a !== null) return true;
+  else false;
+}
+
 module.exports = {
   stringify: function(_JSON, SYMLESS, BREAK_POINT_DEPTH) {
     const output = {};
@@ -149,5 +168,7 @@ module.exports = {
   mapObjectRecursively: mapObjectRecursively,
   mapEntries,
   mapKeys,
+  mapObjectRecursivelyV2Beta: mapObjectRecursivelyV2,
+  isObject,
 }
 

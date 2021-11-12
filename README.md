@@ -104,6 +104,12 @@ Following are a few path examples
 
 5. *nakiri.mapKeys(_obj, _mapFunction)* is used to map keys of an object. The *_mapFunction* argument must be a valid javascript function that takes in a valid *JSON key* and return a valid *JSON key*. e.g. ```key => key+5``` will append the character '5' to all key names.  
 
+6. *nakiri.mapObjectRecursivelyV2Beta(_obj, _mapFunction, _cutoff_depth)* is  used to map an object recursively to a certain depth. e.g. The *_mapFunction* argument must be a valid javascript function that returns a 2-D array, in which each member is a valid entry, e.g. ```entry => ['key', 'value']```. The *_cutoff_depth* must be a valid *number* greater than 0; it tells the method to stop the recursive algorithm if it reaches a certain object depth. Array are not considered as going deeper.  
+
+7. *nakiri.isObject(_obj)* is used to check if the provided *_obj* argument is a JS Object, but is not an *Array* or *null*. It returns a *boolean* value.
+
+> All methods with Beta suffixed in their namespace are in testing stage.  
+
 More documentation comming soon, if you have questions shoot them at *rayvanet@gmail.com* and I will get to it ASAP.
 
 # LICENSE
