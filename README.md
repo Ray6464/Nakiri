@@ -108,7 +108,7 @@ Following are a few path examples
 
 7. *nakiri.isObject(_obj)* is used to check if the provided *_obj* argument is a JS Object, but is not an *Array* or *null*. It returns a *boolean* value.
 
-8. *nakiri.noRefBorder(_arr)* is used to remove the ```${{ varName }}``` dollar sign and brackets from each member in a string. e.g. ```nakiri.noRefBorder(['${{name}}', '${{age}}']) // returns ['name', 'age']```.  
+8. *nakiri.noRefBorder(_arr, _prefix, _suffix)* is used to remove the ```${{ varName }}``` dollar sign and brackets from each member in a string. e.g. ```nakiri.noRefBorder(['${{name}}', '${{age}}']) // returns ['name', 'age']```. The **_prefix** and **_suffix** are optional **regexp** parameters used to remove custom reference borders, e.g. ```$(( var ))```, ```$[[ var ]]```, ```< var />```, etc.
 
 9. *nakiri.metaFill(_FORM_OBJ, _HIVE_OBJ)* fills a **NAKIRI FORM** with data provided in a **NAKIRI HIVE**. Example provided in the *NAKIRI FORM* section below.
 
@@ -137,8 +137,11 @@ const FORM = {
   title: '${{title}}',
   pay: '${{pay/hourly}}',
   sister: '${{../sister/name}}',
+  savings: '${{$((SAVINGS))/health}}',
 }
 ```
+
+> The ```$((SAVINGS))``` is a reference to a custom/non-standared prop in the **NAKIRI HIVE**.  
 
 # NAKIRI HIVE  
 
@@ -164,10 +167,11 @@ const david_data = {
 
 const david_data_hive = {
   ROOT: david_data,
-  PARENT: { sister: { name: 'Beth', age: 16 } },
+  PARENT: { sister: { name: 'Beth', age: 16 } }, // a psudo-parent since root has no parent
   CURRENT: david_data,
   HOME: david_data.details,
   SYMLESS: david_data.details.employement,
+  SAVINGS: { health: '10k', unemployement: '50k' }
 }
 ```
 
