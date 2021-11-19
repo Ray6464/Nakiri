@@ -1,6 +1,7 @@
 // needs escape sequences for {, }, /, ., ~
 
 const variableReferenceRegex = /\$\{\{( )*[^\O^\}]+( )*\}\}/g;
+const variableReferenceRegexFat = /\$\(\(( )*[^\O^\)]+( )*\)\)/g;
 
 function parseCircularObject(_OBJ, _SYMLESS, _SEPRATOR) {
   if (typeof(_OBJ) !== 'object') return 'ERR: 1st Argument not an object';
@@ -159,8 +160,12 @@ function isObject(a) {
   else false;
 }
 
-function noRefBorder(_matches) {
-  return _matches.map(_match => _match.replace(/\$\{\{( )*?/, '').replace(/( )*\}\}/, ''));
+function noRefBorder(_matches, _regexpP, _regexpS) {
+  const prefix = (_regexpP || /\$\{\{( )*?/);
+  const suffix = ( _regexpS || /( )*\}\}/);
+//  console.log({_regexpP, _regexpS, prefix, suffix, _matches});
+//  console.log(_matches.map(_match => _match.replace(prefix, '').replace(suffix, '')));
+  return _matches.map(_match => _match.replace(prefix, '').replace(suffix, ''));
 }
 
 function metaFill(_FORM_OBJ, _DATA_OBJ) {
@@ -182,6 +187,7 @@ function findPathRef(_path, _DATA_OBJ) {
              if (_n === '${{HOME}}') return _DATA_OBJ.HOME;
              if (_n === '${{PARENT}}') return _DATA_OBJ.PARENT;
              if (_n === '${{CURRENT}}') return _DATA_OBJ.CURRENT;
+             if (variableReferenceRegexFat.test(_n)) return _DATA_OBJ[noRefBorder([_n], /\$\(\(( )*?/, /( )*\)\)/)[0]];
              return _p[_n];
            });
 }
