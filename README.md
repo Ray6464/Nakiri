@@ -110,7 +110,7 @@ Following are a few path examples
 
 8. *nakiri.noRefBorder(_arr, _prefix, _suffix)* is used to remove the ```${{ varName }}``` dollar sign and brackets from each member in a string. e.g. ```nakiri.noRefBorder(['${{name}}', '${{age}}']) // returns ['name', 'age']```. The **_prefix** and **_suffix** are optional **regexp** parameters used to remove custom reference borders, e.g. ```$(( var ))```, ```$[[ var ]]```, ```< var />```, etc.
 
-9. *nakiri.metaFill(_FORM_OBJ, _HIVE_OBJ)* fills a **NAKIRI FORM** with data provided in a **NAKIRI HIVE**. Example provided in the *NAKIRI FORM* section below.
+9. *nakiri.metaFill(_FORM_OBJ, _HIVE_OBJ)* fills a **NAKIRI FORM** with data provided in a **NAKIRI HIVE**. Example provided in the *NAKIRI FORM* section below. The **meta-fill** method stringifies the form to fill it, if you want to keep the filling order intact then use ```nakiri.mapEntries``` instead.  
 
 10. *nakiri.findPathRef(_path, _HIVE_OBJ)* takes a **UNIX PATH* as reference and returns its value from the **NAKIRI HIVE**. e.g.  
 ```js
