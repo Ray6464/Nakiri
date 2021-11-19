@@ -1,6 +1,6 @@
 {
   "name": "nakiri",
-  "version": "1.6.1",
+  "version": "1.9.0",
   "description": "Create circular JSON objects from .json files using a built-in unix style referencing scheme.",
   "main": "app.js",
   "scripts": {
