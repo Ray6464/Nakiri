@@ -108,7 +108,73 @@ Following are a few path examples
 
 7. *nakiri.isObject(_obj)* is used to check if the provided *_obj* argument is a JS Object, but is not an *Array* or *null*. It returns a *boolean* value.
 
+8. *nakiri.noRefBorder(_arr)* is used to remove the ```${{ varName }}``` dollar sign and brackets from each member in a string. e.g. ```nakiri.noRefBorder(['${{name}}', '${{age}}']) // returns ['name', 'age']```.  
+
+9. *nakiri.metaFill(_FORM_OBJ, _HIVE_OBJ)* fills a **NAKIRI FORM** with data provided in a **NAKIRI HIVE**. Example provided in the *NAKIRI FORM* section below.
+
+10. *nakiri.findPathRef(_path, _HIVE_OBJ)* takes a **UNIX PATH* as reference and returns its value from the **NAKIRI HIVE**. e.g.  
+```js
+nakiri.findPathRef(/details/wage, {
+  name: 'David',
+  details: {
+    wage: '15$/hr'
+  }
+}) //returns
+```
+
 > All methods with Beta suffixed in their namespace are in testing stage.  
+
+# NAKIRI FORM  
+
+A **NAKIRI FORM** is a JSON Object with **UNIX PATH** references to ```values``` stored in a **NAKIRI HIVE** Object. e.g.  
+
+```js
+const FORM = {
+  name: '${{/name}}',
+  mother: '${{./family/mother}}',
+  age: '${{/age}}',
+  color: '${{~/color}}',
+  title: '${{title}}',
+  pay: '${{pay/hourly}}',
+  sister: '${{../sister/name}}',
+}
+```
+
+# NAKIRI HIVE  
+
+A **NAKIRI HIVE** is a JSON Object with 5 props: 'ROOT', 'PARENT', 'HOME', 'CURRENT', 'SYMLESS'. These Objects are used to keep track of the navigation of a proverbial *head* up and down any *tree* like structure. e.g. JSON Objects, XML data, etc.  
+
+```js
+const david_data = {
+  name: 'david',
+  age: 22,
+  details: {
+    color: 'red',
+    employement: {
+      title: 'Jr. Manager',
+      pay: {
+        hourly: '15$'
+      }
+    }
+  },
+  family: {
+    mother: 'Mary'
+  }
+}
+
+const david_data_hive = {
+  ROOT: david_data,
+  PARENT: { sister: { name: 'Beth', age: 16 } },
+  CURRENT: david_data,
+  HOME: david_data.details,
+  SYMLESS: david_data.details.employement,
+}
+```
+
+> As the *head* moved down the david_data object the 'ROOT' stays the same, but the 'CURRENT' is replaced by the *prop* on which the *head* is currently on.  
+> The 'PARENT' also changes to the very next prop up the chain, relative to the 'CURRENT' prop.  
+> The 'HOME' should refer to the node which connects the 'CURRENT' node to the 'ROOT' node.  
+> The 'SYMLESS' prop can refer to any place, or even another object. To access this object with a *UNIX PATH* we can just name props of the SYMLESS object, e.g. the 'title' prop in the *NAKIRI FORM* section.
 
 More documentation comming soon, if you have questions shoot them at *rayvanet@gmail.com* and I will get to it ASAP.
 
