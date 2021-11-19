@@ -1,5 +1,7 @@
 // needs escape sequences for {, }, /, ., ~
 
+const variableReferenceRegex = /\$\{\{( )*[^\O^\}]+( )*\}\}/g;
+
 function parseCircularObject(_OBJ, _SYMLESS, _SEPRATOR) {
   if (typeof(_OBJ) !== 'object') return 'ERR: 1st Argument not an object';
   if (typeof(_SYMLESS) === 'undefined') _SYMLESS = '__ROOT__/';
@@ -157,6 +159,33 @@ function isObject(a) {
   else false;
 }
 
+function noRefBorder(_matches) {
+  return _matches.map(_match => _match.replace(/\$\{\{( )*?/, '').replace(/( )*\}\}/, ''));
+}
+
+function metaFill(_FORM_OBJ, _DATA_OBJ) {
+  if (!isObject(_FORM_OBJ) || !isObject(_DATA_OBJ)) throw "ERR: Nakiri: _FORM_OBJ or _DATA_OBJ argument NOT a valid JSON 'object'";
+  return JSON.parse(JSON.stringify(_FORM_OBJ).replaceAll(variableReferenceRegex, match => {
+    return (findPathRef(noRefBorder([match])[0], _DATA_OBJ));
+  }));
+}
+
+function findPathRef(_path, _DATA_OBJ) {
+  return [_DATA_OBJ.SYMLESS, ..._path
+           .replace(/^\//, '${{ROOT}}/')
+           .replace(/^\~\//, '${{HOME}}/')
+           .replace(/^..\//, '${{PARENT}}/')
+           .replace(/^.\//, '${{CURRENT}}/')
+           .split('/')]
+           .reduce((_p, _n) => {
+             if (_n === '${{ROOT}}') return _DATA_OBJ.ROOT;
+             if (_n === '${{HOME}}') return _DATA_OBJ.HOME;
+             if (_n === '${{PARENT}}') return _DATA_OBJ.PARENT;
+             if (_n === '${{CURRENT}}') return _DATA_OBJ.CURRENT;
+             return _p[_n];
+           });
+}
+
 module.exports = {
   stringify: function(_JSON, SYMLESS, BREAK_POINT_DEPTH) {
     const output = {};
@@ -170,5 +199,8 @@ module.exports = {
   mapKeys,
   mapObjectRecursivelyV2Beta: mapObjectRecursivelyV2,
   isObject,
+  noRefBorder,
+  metaFill,
+  findPathRef,
 }
 
